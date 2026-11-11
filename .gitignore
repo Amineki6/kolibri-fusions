@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.o
+*.a
+*.dylib
+build/
+.ninja_*
+
+# Virtual environments
+venv/
+.env/
+env/
+
+# Large checkpoints & weights
+checkpoints/
+*.pt
+*.safetensors
+*.bin
+
+# Profiler outputs & traces
+traces/
+*.nsys-rep
+*.sqlite
+*.ncu-rep
+
+# Editor & OS files
+.vscode/
+.idea/
+.DS_Store
+
