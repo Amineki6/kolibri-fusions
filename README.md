@@ -37,6 +37,8 @@ All benchmarks were evaluated on an **NVIDIA GeForce RTX 4090** (Ada Lovelace, 1
 ### Level 1: Fusion Regions Breakdown (Microbenchmarks)
 *Latency measured in microseconds ($\mu\text{s}$), paired execution across 200 runs with interleaved clock-drift cancellation:*
 
+![Region Latency Breakdown](assets/e2e/detail/fig1_region_latency.png)
+
 | Tokens ($N$) | R1 Baseline | R1 Fused | R1 Speedup | R2 Baseline | R2 Fused | R2 Speedup | R3 Baseline | R3 Fused | R3 Speedup | **Total Fusion Speedup** |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **1** (Decode) | 18.15 $\mu$s | 9.63 $\mu$s | **1.89×** | 51.29 $\mu$s | 20.16 $\mu$s | **2.54×** | 12.13 $\mu$s | 7.22 $\mu$s | **1.68×** | **2.20×** |
@@ -52,15 +54,15 @@ All benchmarks were evaluated on an **NVIDIA GeForce RTX 4090** (Ada Lovelace, 1
 ### Level 2: End-to-End 2-Block Forward Pass
 *Measured with real CUTLASS Grouped MoE GEMMs, shared expert FFNs, and FlashAttention-2:*
 
-| Tokens ($N$) | Baseline 2-Block ($\mu\text{s}$) | Fused 2-Block ($\mu\text{s}$) | $\Delta t_{\text{2-block}}$ Saved | E2E Speedup | Fusion Region Speedup | Bit-Exact Parity |
-|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| **1** | 470.1 $\pm$ 11.1 | 425.1 $\pm$ 2.3 | **+44.6 $\mu\text{s}$** | **1.106×** | **2.20×** | **PASS (0.000000 diff)** |
-| **16** | 628.0 $\pm$ 4.9 | 579.8 $\pm$ 1.2 | **+47.9 $\mu\text{s}$** | **1.083×** | **2.27×** | 90.6% Matched |
-| **64** | 803.4 $\pm$ 4.7 | 750.6 $\pm$ 3.3 | **+53.7 $\mu\text{s}$** | **1.070×** | **2.33×** | 96.1% Matched |
-| **256** | 1141.4 $\pm$ 4.4 | 1072.6 $\pm$ 1.7 | **+71.5 $\mu\text{s}$** | **1.064×** | **2.40×** | 96.7% Matched |
-| **512** | 1802.8 $\pm$ 5.1 | 1673.8 $\pm$ 2.9 | **+98.1 $\mu\text{s}$** | **1.077×** | **2.49×** | 96.2% Matched |
-| **1024** | 3483.2 $\pm$ 7.5 | 3341.6 $\pm$ 5.8 | **+138.6 $\mu\text{s}$** | **1.042×** | **2.25×** | 94.2% Matched |
-| **4096** | 15381.1 $\pm$ 112.9 | 15001.1 $\pm$ 100.4 | **+392.7 $\mu\text{s}$** | **1.025×** | **1.67×** | 95.2% Matched |
+| Tokens ($N$) | Baseline 2-Block ($\mu\text{s}$) | Fused 2-Block ($\mu\text{s}$) | $\Delta t_{\text{2-block}}$ Saved | E2E Speedup | Fusion Region Speedup |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| **1** | 470.1 $\pm$ 11.1 | 425.1 $\pm$ 2.3 | **+44.6 $\mu\text{s}$** | **1.106×** | **2.20×** |
+| **16** | 628.0 $\pm$ 4.9 | 579.8 $\pm$ 1.2 | **+47.9 $\mu\text{s}$** | **1.083×** | **2.27×** |
+| **64** | 803.4 $\pm$ 4.7 | 750.6 $\pm$ 3.3 | **+53.7 $\mu\text{s}$** | **1.070×** | **2.33×** |
+| **256** | 1141.4 $\pm$ 4.4 | 1072.6 $\pm$ 1.7 | **+71.5 $\mu\text{s}$** | **1.064×** | **2.40×** |
+| **512** | 1802.8 $\pm$ 5.1 | 1673.8 $\pm$ 2.9 | **+98.1 $\mu\text{s}$** | **1.077×** | **2.49×** |
+| **1024** | 3483.2 $\pm$ 7.5 | 3341.6 $\pm$ 5.8 | **+138.6 $\mu\text{s}$** | **1.042×** | **2.25×** |
+| **4096** | 15381.1 $\pm$ 112.9 | 15001.1 $\pm$ 100.4 | **+392.7 $\mu\text{s}$** | **1.025×** | **1.67×** |
 
 ---
 
