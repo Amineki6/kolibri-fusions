@@ -16,9 +16,9 @@ While large matrix multiplications (GEMMs) dominate total FLOPs during large-bat
 
 This repository provides **three self-contained, production CUDA fusions** that replace these 7 disjoint operations with 3 highly tuned, in-register kernels:
 
-1. **Region 1: Fused Sandwich Norm (`fusions/01_sandwich_norm`)**: Merges Post-Attention RMSNorm, residual addition, and Pre-MoE RMSNorm into a single kernel launch (`fusedSandwichNormRegKernel`), keeping the residual stream in 128-bit vector registers. **Speedup: 1.85× – 2.18×**.
-2. **Region 2: Dynamic Hybrid MoE Prologue (`fusions/03_moe_prologue`)**: Combines a Bitonic padded Top-6 router with an adaptive dispatch map ($N=512$ tipping point) and 128-bit vectorized activation expansion (`kolibri_activation_expansion_kernel`). **Speedup: 1.63× – 2.90×**.
-3. **Region 3: Fused Post-MoE Norm (`fusions/02_post_moe_norm`)**: Merges routed expert and shared expert addition with Post-FFN RMSNorm (`fusedAddPostMoeNormRegKernel`) using a 256-thread geometry that achieves **95.1% peak DRAM bandwidth (934.7 GB/s)**. **Speedup: 1.60× – 2.40×**.
+1. **Region 1: Sandwich Norm (`fusions/01_sandwich_norm`)**: Fused Post-Attention RMSNorm + Residual Add + Pre-MoE RMSNorm (**1.85× – 2.18×** speedup).
+2. **Region 2: MoE Prologue (`fusions/03_moe_prologue`)**: Fused Router Top-6 + Dispatch Mapping + Vectorized Row Expansion (**1.63× – 2.90×** speedup).
+3. **Region 3: Post-MoE Norm (`fusions/02_post_moe_norm`)**: Fused Routed + Shared Expert Add + Post-FFN RMSNorm (**1.60× – 2.40×** speedup).
 
 Across the entire 50-layer decoder stack, these optimizations save **1.11 ms to 9.82 ms per forward pass**, accelerating non-GEMM decode by over **2.2×**.
 
