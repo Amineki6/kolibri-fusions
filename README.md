@@ -71,6 +71,8 @@ All benchmarks were evaluated on an **NVIDIA GeForce RTX 4090** (Ada Lovelace, 1
 Because Kolibri's 50 decoder layers share identical dimensions ($D=2560, E=384, K=6$) and execute sequentially, the measured latency reduction scales linearly across depth:
 $$\Delta t_{\text{50-layer}} = 50 \times \left( \frac{\Delta t_{\text{2-block}}}{2} \right) = 25 \times \Delta t_{\text{2-block}}$$
 
+![Full Model 50-Layer Latency Savings Projection](assets/e2e/detail/fig5_full_model.png)
+
 * **Single-Token Decode ($N = 1$)**: Saves **1.115 ms per token** forward pass.
 * **Mid-Batch ($N = 512$)**: Saves **2.453 ms per forward pass**.
 * **Long Prefill ($N = 4096$)**: Saves **9.818 ms per forward pass**.
