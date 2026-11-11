@@ -5,8 +5,11 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.14%20%7C%202.6-EE4C2C.svg)](https://pytorch.org)
 [![TensorRT-LLM](https://img.shields.io/badge/TensorRT--LLM-v1.3.0-76B900.svg)](https://github.com/NVIDIA/TensorRT-LLM)
 [![Bit-Exact Parity](https://img.shields.io/badge/Numerical%20Parity-Bit--Exact%20Pass-brightgreen.svg)]()
+[![Presentation Slides](https://img.shields.io/badge/Presentation-Slide%20Deck%20(PDF)-blue.svg)](assets/Kolibri%20Optimization%20--%20Presentation.pdf)
 
 Production CUDA kernel fusions for the **Kolibri 1 (78B MoE)** decoder stack in **NVIDIA TensorRT-LLM**, eliminating non-GEMM memory bandwidth bottlenecks and launch bubbles across 50 decoder layers.
+
+> **Presentation Slide Deck**: A high-level overview of the architectural challenges, kernel fusions, and empirical results is available in [`assets/Kolibri Optimization -- Presentation.pdf`](assets/Kolibri%20Optimization%20--%20Presentation.pdf).
 
 ---
 
