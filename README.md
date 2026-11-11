@@ -26,36 +26,7 @@ Across the entire 50-layer decoder stack, these optimizations save **1.11 ms to 
 
 ## 2. Kolibri Architecture & Optimization Regions
 
-```
-Kolibri Decoder Layer (Repeated across 50 layers):
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ [01 Input RMSNorm] ──> [02-05 Attention Block]                                         │
-│                                │                                                       │
-│ ┌──────────────────────────────▼─────────────────────────────────────────────────────┐ │
-│ │ REGION 1: SANDWICH NORM                                                            │ │
-│ │ [06 Post-Attn Norm] ──> [07 Residual Add] ──> [08 Pre-MoE Norm]                     │ │
-│ └──────────────────────────────┬─────────────────────────────────────────────────────┘ │
-│                                │                                                       │
-│ ┌──────────────────────────────▼─────────────────────────────────────────────────────┐ │
-│ │ REGION 2: MoE PROLOGUE                                                             │ │
-│ │ [09 Router Gate GEMM] ──> [10 Top-6 Experts] ──> [11 Dispatch Maps] ──> [12 Expand]│ │
-│ └──────────────────────────────┬─────────────────────────────────────────────────────┘ │
-│                                │                                                       │
-│   ┌────────────────────────────┴───────────────────────────┐                           │
-│   ▼                                                        ▼                           │
-│ [13 Routed Experts GEMM]                             [15 Shared Expert GEMM]           │
-│   │                                                        │                           │
-│ [14 Finalize (Top-6 Reduce)]                               │                           │
-│   │                                                        │                           │
-│ ┌─▼────────────────────────────────────────────────────────▼─────────────────────────┐ │
-│ │ REGION 3: POST-MoE NORM                                                            │ │
-│ │ [16 Sum Experts (Routed + Shared)] ──> [17 Post-FFN Norm]                           │ │
-│ └──────────────────────────────┬─────────────────────────────────────────────────────┘ │
-│                                │                                                       │
-│                                ▼                                                       │
-│                     Output to Next Decoder Layer                                       │
-└────────────────────────────────────────────────────────────────────────────────────────┘
-```
+![Kolibri Architecture and Optimization Regions](assets/img/Kolibri%20Architecture.jpg)
 
 ---
 
